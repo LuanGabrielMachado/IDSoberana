@@ -224,8 +224,36 @@ O app utiliza **Clean Architecture** com o padrão **MVVM (Model-View-ViewModel)
 | AES | GCM 256 bits | N/A | ✅ E2E |
 | PFS | ECDH X25519 | ❌ Pendente | ⚠️ Em desenvolvimento |
 
----
+---  
 
+<div align="center">
+
+## 📸 Tá, mas tem print?
+
+<div align="center">
+
+### Tem
+
+<table>
+<tr>
+<td width="15%"><img src="Images/1.png" alt="Tela 1"/></td>
+<td width="15%"><img src="Images/2.png" alt="Tela 2"/></td>
+<td width="15%"><img src="Images/3.png" alt="Tela 3"/></td>
+<td width="15%"><img src="Images/4.png" alt="Tela 4"/></td>
+</tr>
+<tr>
+<td width="15%"><img src="Images/5.png" alt="Tela 5"/></td>
+<td width="15%"><img src="Images/6.png" alt="Tela 6"/></td>
+<td width="15%"><img src="Images/7.png" alt="Tela 7"/></td>
+<td width="15%"><img src="Images/8.png" alt="Tela 8"/></td>
+</tr>
+</table>
+
+</div>
+
+*Imagens de aparelho físico rodando app*  
+
+---  
 
 ## 📜 Licença
 
