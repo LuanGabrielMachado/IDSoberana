@@ -63,7 +63,7 @@ criptografia avançada e camadas preparadas para uma **arquitetura HeptaKey (7 c
    - Terceiros podem verificar se o pacote foi realmente emitido pelo Soberana e se não foi alterado.
 
 6. **Integração com backend (futura)**  
-   - A base já está apta um cliente de rede (`DataRequestClient`) e interceptores HTTP de auditoria.  
+   - A base já está apta a um cliente de rede (`DataRequestClient`) e interceptores HTTP de auditoria.  
    - Isso permite, no futuro, centralizar requisições e validar tudo com assinaturas e janelas de política (K5).
 
 ---
