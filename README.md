@@ -121,13 +121,13 @@ O sistema opera sobre uma **hierarquia de sete chaves criptográficas** independ
 
 - Código de base para integração com `play-services-fido` já preparado.  
 - Suporte a um serviço de **passkeys locais**, pronto para sincronia com backend quando ativado.  
-- Mantido **desativado por padrão** na QuantumBase, para não travar o fluxo enquanto o core é estabilizado.
+- Mantido **desativado por padrão** na Quantum Framework, para não travar o fluxo enquanto o core é estabilizado.
 
 ---
 
 ## 🧱 Stack Tecnológica
 
-### 📱 App Android (QuantumBase)
+### 📱 App Android (Quantum Framework)
 
 - **Linguagem:** Kotlin  
 - **UI:** Jetpack Compose + Material 3  
@@ -154,7 +154,7 @@ O sistema opera sobre uma **hierarquia de sete chaves criptográficas** independ
 
 ## 🧾 Status Atual
 
-> **QuantumBase** é uma base sólida para a terceira geração do Soberana:  
+> **Quantum Framework** é uma base sólida para a terceira geração do Soberana:  
 > a arquitetura de segurança já está desenhada e integrada,  
 > o app funciona offline com foco em criptografia local e biometria,  
 > e as camadas avançadas (backend, FIDO2, HeptaKey completa)  
