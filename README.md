@@ -11,13 +11,83 @@
 # 🛰️ Identidade Soberana + Quantum  Framework
 ### Segurança Pós-Quântica • Criptografia HeptaKey • Identidade Descentralizada
 
-A **Identidade Soberana Quantum** redefine o conceito de privacidade digital e autenticação segura.  
-Construída do zero com uma arquitetura pós-quântica, o sistema combina **criptografia multi-camada**, **biometria obrigatória** e **controle granular de dados**,  
-tudo dentro de um ecossistema **offline-first**, auditável e imune a interferências externas.
+### Identidade digital segura, offline-first e sob controle do usuário
+
+A **Identidade Soberana** é um projeto de identidade digital focado em **segurança forte**,  
+**controle granular de dados** e **funcionamento offline**, pensado desde o início para que o usuário seja o **único dono e guardião** da própria identidade.
+
+A base atual, **Quantum Framework**, é a terceira geração do Soberana: uma reescrita estruturada, com arquitetura moderna,  
+criptografia avançada e camadas preparadas para uma **arquitetura HeptaKey (7 chaves)** e recursos como **FIDO2 / WebAuthn**.
+
+</div>
+
+## 🎯 Objetivos do Projeto
+
+- 🛡️ **Soberania de identidade**  
+  O usuário controla o que compartilha, com quem e por quanto tempo – sempre com trilha de auditoria.
+
+- 🔐 **Segurança desde a base**  
+  Criptografia forte, biometria obrigatória em ações sensíveis, binding de dispositivo e preparado para pós-quântico.
+
+- 📵 **Offline-first de verdade**  
+  O app funciona totalmente offline: cadastro, cofre, criptografia e histórico não dependem de servidor.
+
+- 🧾 **Compartilhamento granular e verificável**  
+  Compartilhar só os campos necessários, com export em JSON assinado, para verificação de autenticidade.
+
+- 🧩 **Arquitetura extensível**  
+  Tudo foi pensado para crescer: backend, FIDO2, auditoria de rede e HeptaKey completa podem ser ativados em camadas.
 
 ---
 
-## ⚙️ Tecnologia e Arquitetura
+## 🧠 Como o Soberana funciona (visão geral)
+
+1. **Cadastro & Cofre Local**  
+   - O usuário cadastra seus dados pessoais (nome, documento, endereço, etc).  
+   - Esses dados são armazenados em um **banco local criptografado**, nunca em texto puro.
+
+2. **Proteção por Biometria**  
+   - Acesso ao cofre e ações sensíveis (como exportar dados) passam por **gate biométrico**.  
+   - A biometria é integrada via `BiometricPrompt` com política forte (BIOMETRIC_STRONG / DEVICE_CREDENTIAL).
+
+3. **Cofre & HeptaKey (núcleo criptográfico)**  
+   - O app usa um núcleo de chaves separado por função (identidade, dados, dispositivo, etc).  
+   - A base Quantum já está preparada para a arquitetura **HeptaKey** completa, mesmo que nem todas as chaves sejam usadas ainda na UI.
+
+4. **Compartilhamento Granular**  
+   - Em vez de “entregar tudo”, o usuário escolhe quais campos serão compartilhados.  
+   - O app monta um **envelope protegido**: dados cifrados + metadados assinados.
+
+5. **Export Verificável (roadmap)**  
+   - Exportar um pacote JSON legível + assinatura destacada + metadados de política.  
+   - Terceiros podem verificar se o pacote foi realmente emitido pelo Soberana e se não foi alterado.
+
+6. **Integração com backend (futura)**  
+   - A base já está apta um cliente de rede (`DataRequestClient`) e interceptores HTTP de auditoria.  
+   - Isso permite, no futuro, centralizar requisições e validar tudo com assinaturas e janelas de política (K5).
+
+---
+
+## 🧬 Segurança — o coração do Soberana
+
+Mesmo antes de ativar todas as features avançadas, a base já é desenhada com segurança em primeiro lugar:
+
+### 🔑 Núcleo de Chaves (HeptaKey-ready)
+
+O projeto trabalha com o uso de **7 chaves com papéis separados**:
+
+- **K1 – Identidade**  
+  Assinatura de metadados, pedidos e exportações (base da identidade criptográfica).
+- **K2 – Dados**  
+  Cifra dos dados do usuário (cofre) com modos autenticados (AES-GCM).
+- **K3 – Dispositivo**  
+  Binding com o hardware: os dados só fazem sentido naquele aparelho.
+- **K4–K7**  
+  Reservadas para sessão, política, recuperação e consentimento avançado  
+  (já previstas na arquitetura, prontas para serem ligadas fase a fase).
+
+> Quantum Framework, o código já foi organizado pensando nessa hierarquia,  
+> mesmo que nem todos os fluxos usem todas as chaves ainda.
 
 ### 🧠 Núcleo HeptaKey (K1 → K7)
 O sistema opera sobre uma **hierarquia de sete chaves criptográficas** independentes e interligadas, cada uma com propósito próprio:
@@ -32,85 +102,90 @@ O sistema opera sobre uma **hierarquia de sete chaves criptográficas** independ
 | **K6 – Recuperação** | Shamir T-de-N (Split Key) | Offline | Recuperação sem backend |
 | **K7 – Consentimento** | Assina base legal e finalidade de uso | Ed25519 | Transparência e auditoria legal |
 
----
+  ---  
+  
+### 🔐 Criptografia & Privacidade
 
-## 🔐 Segurança de Próxima Geração
+- **Banco local cifrado** (Room + camadas de criptografia)  
+- **Nada crítico em texto plano**: dados sensíveis sempre passam pelo núcleo de cifragem antes de ir para o disco.  
+- Uso de AAD (Associated Authenticated Data) nas cifras em pontos estratégicos (id, device, etc).  
+- Preparado para evoluir para **modos híbridos e pós-quânticos** conforme libs estáveis estiverem disponíveis.
 
-- **Criptografia pós-quântica híbrida** (AES-GCM + X25519 + Ed25519 → PQC-ready)  
-- **HeptaKey Hierarchy** — múltiplas camadas independentes de proteção  
-- **AAD dinâmico (Associated Auth Data)** — cada cifra vinculada ao ID e dispositivo  
-- **Biometria obrigatória** — validação física antes de qualquer ação sensível  
-- **Selagem total de disco** — nenhum dado em texto claro (EncryptedFile AES256-GCM)  
-- **Assinaturas digitais K1/K7** — autenticação e verificação de consentimento  
-- **Root & Tamper Protection** — bloqueio automático sob violação de integridade  
+### 👆 Biometria como gate de ações sensíveis
 
----
+- Biometria integrada com reutilização controlada (janela de tempo curta para não irritar o usuário).  
+- Chamada antes de ações como: abrir Meus Dados, compartilhar/exportar, responder requisições.  
+- A biometria acontece **localmente**, sem depender de servidor.
 
-## 💾 Operação Offline-First
+### 🌐 FIDO2 / WebAuthn (camada opcional)
 
-O app foi projetado para funcionar **completamente offline**:
-
-- **Outbox Inteligente** — filas criptografadas com sincronização segura quando há rede  
-- **Recovery Local (K6)** — restauração independente, sem servidor  
-- **Export Verificável** — JSON legível + `.sig` + `meta.json` (K5/K7)  
-- **Sincronização Assinada** — quando conectado, valida via K1 antes de transmitir  
+- Código de base para integração com `play-services-fido` já preparado.  
+- Suporte a um serviço de **passkeys locais**, pronto para sincronia com backend quando ativado.  
+- Mantido **desativado por padrão** na QuantumBase, para não travar o fluxo enquanto o core é estabilizado.
 
 ---
 
-## 🎯 Funcionalidades Principais
+## 🧱 Stack Tecnológica
 
-### 🔒 Segurança & Privacidade
-- Biometria e assinatura digital em todas as ações sensíveis  
-- Compartilhamento **campo a campo** com aprovação explícita  
-- **Histórico auditável** — mostra empresa, motivo e campos solicitados  
-- **Revogação instantânea** de chaves e acessos  
-- **Verificação de autenticidade** via export assinável (K1 + cadeia K5/K7)
+### 📱 App Android (QuantumBase)
 
-### 🧬 Estrutura Técnica
-- **Android:** Kotlin • Jetpack Compose • Hilt • Room • Coroutines  
-- **Cripto:** AES-GCM • X25519 • Ed25519 • EncryptedFile • Keystore  
-- **UI:** Material Design 3 • Tema dinâmico • Animações suaves • Edge-to-edge  
-- **Backend Quantum v19:** Spring Boot • PostgreSQL • verificação K1/K5  
+- **Linguagem:** Kotlin  
+- **UI:** Jetpack Compose + Material 3  
+- **Arquitetura:** ViewModel + UseCases + Repositórios  
+- **Persistência:** Room (com atenção a criptografia em camadas)  
+- **DI / Orquestração:** Hilt ou container próprio de injeção (dependendo da fase)  
+- **Conectividade:** OkHttp / Ktor client (para backend, quando ativado)  
+- **Segurança:**
+  - androidx.security (crypto / EncryptedFile)  
+  - BiometricPrompt (BIOMETRIC_STRONG)  
+  - Preparado para FIDO2 (`play-services-fido`)
 
----
+### ☁️ Backend (planejado / integrável)
 
-## 🧩 Arquitetura de Camadas
-
-
-- **Presentation:** UI Compose + navegação animada (AnimatedNavHost)  
-- **Domain:** Fluxos de autenticação, criptografia e política de consentimento  
-- **Data:** Repositórios selados, persistência segura e Outbox  
-
----
-
-## 🧠 Filosofia Quantum
-
-> “A privacidade é um direito.  
-> A autenticação deve ser invisível, mas inquebrável.”
-
-A Identidade Soberana Quantum é mais que um aplicativo — é um **framework de soberania digital**.  
-Cada decisão técnica é voltada para **autonomia**, **verificabilidade** e **segurança local total**,  
-permitindo que o usuário seja o **único detentor e validador da sua identidade**.
+- **Linguagem:** Kotlin / Java  
+- **Framework:** Spring Boot  
+- **Banco:** PostgreSQL  
+- **Responsabilidades principais:**
+  - Receber envelopes de dados assinados  
+  - Validar assinaturas e integridade  
+  - Expor requisições de dados (requests) e auditoria
 
 ---
 
-## 🚀 Status Atual
+## 🧾 Status Atual
 
-| Módulo | Estado | Observação |
-|:--------|:--------|:------------|
-| Criptografia HeptaKey | ✅ Concluído | K1–K7 integrados e testados |
-| Biometria | ✅ Obrigatória | Gate em todas as ações sensíveis |
-| Outbox / Offline | ✅ | 100% funcional |
-| Export Verificável | ✅ | Meta + assinatura K1/K7 |
-| UI / UX | ✅ | Compose M3 + tema dinâmico |
-| Backend Quantum v19 | ⚙️ | Validação de integridade e assinatura K1 |
+> **QuantumBase** é uma base sólida para a terceira geração do Soberana:  
+> a arquitetura de segurança já está desenhada e integrada,  
+> o app funciona offline com foco em criptografia local e biometria,  
+> e as camadas avançadas (backend, FIDO2, HeptaKey completa)  
+> estão presentes no código, mas podem ser ativadas gradualmente.
+
+---
+
+## 🤝 Contribuição & Evolução
+
+A evolução do Soberana segue alguns princípios:
+
+- Segurança antes de conveniência  
+- Transparência sobre o que é protegido e onde  
+- Evolução incremental: primeiro o **núcleo confiável**, depois o “brilho” ao redor  
+- Sempre com a meta de colocar o usuário **no controle total** da própria identidade
+
+---
+
+> A Identidade Soberana não é um simples app.
+
+> É um provedor de identidade, um cofre, um manifesto
+ 
+> É um experimento de como podemos ter de volta o controle total dos nossos dados
+
+> Com **privacidade forte, UX simples e confiança verificável**
 
 ---
 
 ## 🧾 Licença
 
-Desenvolvido no contexto do **Identidade Soberana**,  
-com foco em **segurança criptográfica pós-quântica e privacidade digital total**.
+Desenvolvido com foco total em **segurança criptográfica pós-quântica e privacidade digital total**.
 
 **MIT License**
 
